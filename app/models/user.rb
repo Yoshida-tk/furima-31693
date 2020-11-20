@@ -11,6 +11,7 @@ class User < ApplicationRecord
     validates :family_name, format: { with: /\A[ぁ-んァ-ン一-龥]/ }
     validates :first_name_kana, format: { with: /\A[ァ-ヶー－]+\z/ }
     validates :family_name_kana, format: { with: /\A[ァ-ヶー－]+\z/ }
-    validates :password, length: { minimum: 6 }, format: { with: /\A[a-zA-Z0-9]+\z/ }
   end
+  PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
+validates_format_of :password, with: PASSWORD_REGEX
 end
