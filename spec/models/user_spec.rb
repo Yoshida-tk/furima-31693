@@ -9,13 +9,6 @@ RSpec.describe User, type: :model do
       it 'すべての情報が存在している場合に登録できる' do
         expect(@user).to be_valid
       end
-      it "メールアドレスが重複しないこと" do
-        @user.save
-        another_user = FactoryBot.build(:user)
-        another_user.email = @user.email
-        another_user.valid?
-        expect(another_user.errors.full_messages).to include("Email has already been taken")
-      end
     end
 
     context '新規登録ができない時' do
@@ -28,6 +21,13 @@ RSpec.describe User, type: :model do
         @user.email = nil
         @user.valid?
         expect(@user.errors.full_messages).to include("Email can't be blank")
+      end
+      it "メールアドレスが重複していると登録できない" do
+        @user.save
+        another_user = FactoryBot.build(:user)
+        another_user.email = @user.email
+        another_user.valid?
+        expect(another_user.errors.full_messages).to include("Email has already been taken")
       end
       it "emailに@がないと登録できない" do
         @user.email = "testexample.com"
