@@ -38,6 +38,11 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Status must be other than 1")
       end
+      it '商品の説明がなければ登録できない' do
+        @item.text = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Text can't be blank")
+      end
       it '配送料の負担についての情報がなければ登録できない' do
         @item.shipping_id = "1"
         @item.valid?
@@ -58,10 +63,15 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price can't be blank")
       end
-      it '価格の範囲が¥300~¥9,999,999の間でなければ登録できない' do
-        @item.price ="200"
+      it '価格の範囲が¥300以上でなければ登録できない' do
+        @item.price ="299"
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be greater than or equal to 300")
+      end
+      it '価格の範囲が¥9,999,999以下でなければ登録できない' do
+        @item.price = "10,000,000"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is invalid")
       end
       it '販売価格は半角数字でなければ登録できない' do
         @item.price ="３００"

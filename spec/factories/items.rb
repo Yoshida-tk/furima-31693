@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :item do
-    category_id     {'0'}
-    status_id       {'2'}
-    area_id         {'3'}
-    shipping_id     {'4'}
-    days_id         {'5'}
+    category_id     {'2'}
+    status_id       {'3'}
+    area_id         {'4'}
+    shipping_id     {'5'}
+    days_id         {'6'}
     product_name    {'test'}
     price           {'3000'}
     text            {'test'}
