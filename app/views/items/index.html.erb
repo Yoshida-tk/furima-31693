@@ -134,7 +134,7 @@
         <div class='item-img-content'>
           <%= image_tag item.image, class: "item-img" %>
 
-        <% unless '商品が売れていない時'%>
+        <% if @item.present? %>
           <div class='sold-out'>
             <span>Sold Out!!</span>
           </div>
