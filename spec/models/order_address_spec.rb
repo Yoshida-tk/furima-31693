@@ -7,7 +7,11 @@ RSpec.describe OrderAddress, type: :model do
   describe '購入処理' do
 
     context '購入ができる時' do
-      it '必須項目が存在している場合に登録できる' do
+      it '必須項目が存在している場合に購入できる' do
+        expect(@order_address).to be_valid
+      end
+      it '建物名がなくても購入できる' do
+        @order_address.building_number = nil
         expect(@order_address).to be_valid
       end
     end
@@ -55,6 +59,11 @@ RSpec.describe OrderAddress, type: :model do
       end
       it '電話番号は11桁以内でなければ購入できない' do
         @order_address.phone_number = '090123456789'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Phone number is invalid")
+      end
+      it '電話番号は数字のみ出なければ購入できない' do
+        @order_address.phone_number = '09012345678a'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Phone number is invalid")
       end

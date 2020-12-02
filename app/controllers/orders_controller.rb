@@ -4,12 +4,10 @@ class OrdersController < ApplicationController
 
   def index
     @order_address = OrderAddress.new
-    if @item.order.present?
-      if current_user.id == @item.user_id || current_user.id != @item.user_id
-        redirect_to root_path
-      else
-        render 'index'
-      end
+    if current_user.id == @item.user_id || current_user.id != @item.user_id && @item.order.present?
+      redirect_to root_path
+    else
+      render 'index'
     end
   end
 
@@ -42,5 +40,6 @@ class OrdersController < ApplicationController
       currency: 'jpy'
     )
   end
+
 
 end
